@@ -69,7 +69,7 @@ const Home = () => {
                 {
                     tasks?.map(task => <div key={task._id} className="flex flex-col lg:flex-row gap-2">
                         <p className='font-bold px-16 py-8 shadow-lg border-2 mb-2'>{task.name}</p>
-                        <div className='flex flex-col gap-2'>
+                        <div className='flex flex-col gap-2 mb-4'>
                             <button className="btn btn-xs btn-outline btn-info font-bold">Complete</button>
                             <button
                                 onClick={() => handleDeleteTask(task)}
