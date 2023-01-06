@@ -20,6 +20,7 @@ const Home = () => {
             .then((res) => res.json())
             .then((data) => {
                 console.log(data);
+                refetch()
             })
             .catch((error) => console.log(error));
     }
