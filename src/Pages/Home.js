@@ -7,7 +7,8 @@ const Home = () => {
         event.preventDefault();
         const name = event.target.name.value;
         const taskAdd = {
-            name
+            name,
+            status: false
         }
 
         fetch("https://task-server-ruby.vercel.app/tasks", {
@@ -52,6 +53,24 @@ const Home = () => {
             })
     }
 
+    const handleComplete = id => {
+        const add = {
+            status: true
+        }
+        fetch(`http://localhost:5000/tasks/${id}`, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify(add)
+        })
+            .then(res => res.json())
+            .then(data => {
+                refetch()
+            })
+    }
+
+
     if (isLoading) {
         return <div className='text-5xl'>Loading...</div>
     }
@@ -71,7 +90,9 @@ const Home = () => {
                     tasks?.map(task => <div key={task._id} className="flex flex-col lg:flex-row gap-2">
                         <p className='font-bold px-16 py-8 shadow-lg border-2 mb-2'>{task.name}</p>
                         <div className='flex flex-col gap-2 mb-4'>
-                            <button className="btn btn-xs btn-outline btn-info font-bold">Complete</button>
+                            <button 
+                            onClick={() => handleComplete(task._id)}
+                            className="btn btn-xs btn-outline btn-info font-bold">Complete</button>
                             <button
                                 onClick={() => handleDeleteTask(task)}
                                 className="btn btn-xs btn-outline btn-info font-bold">
@@ -86,7 +107,7 @@ const Home = () => {
             <p className='font-bold my-6'>Completed Tasks</p>
             <div className='grid grid-cols-1'>
                 <div className="flex items-center gap-12">
-                    <p className='font-bold px-16 py-8 shadow-lg border-2'>Hello</p>
+                    <p className='font-bold px-16 py-8 shadow-lg border-2'></p>
                 </div>
             </div>
         </div>
